@@ -3,6 +3,10 @@ header("Access-Control-Allow-Origin: *");
 //Relier la classe Candicat
 require_once 'cnx.php';    
 require_once 'classes/class.Candidat.php';
+require_once 'classes/class.Centre_interet.php';
+require_once 'classes/class.Experience_pro.php';
+require_once 'classes/class.Formation.php';
+require_once 'classes/class.Language_programmation.php';
 // ordre SQL 
 $sql_candidat = " SELECT * FROM candidat";
 // préparation de la requete
