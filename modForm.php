@@ -12,7 +12,7 @@
 <body>
   <form id="form">
     <div class="card-header">
-      <h6>Suppression une formation</h6>
+      <h6>Modifier une formation</h6>
     </div>
     <div class="card-body">
       <div class="input-group">
@@ -25,7 +25,6 @@
                 maxlength="32"
                 id="ville"
                 placeholder="ville"
-                disabled
               />
       </div>
     </div>
@@ -40,7 +39,6 @@
                 maxlength="32"
                 id="annee"
                 placeholder="annee"
-                disabled
               />
       </div>
     </div>
@@ -55,7 +53,6 @@
                 maxlength="32"
                 id="intitule"
                 placeholder="intitule"
-                disabled
               />
       </div>
     </div>
@@ -70,14 +67,13 @@
                 maxlength="32"
                 id="lieu"
                 placeholder="lieu"
-                disabled
               />
       </div>
     </div>
     
     
     <div class="alert alert-warning text-center">
-      Voulez-vous vraiment supprimer cette experience pro ?
+      Voulez-vous vraiment modifier cette experience pro ?
     </div>
     <div class="card-footer">
       <button type="button" class="btn btn-default float-left" id="cancel">
@@ -123,11 +119,15 @@
             // parametres
             const params2 = new FormData();
             params2.append('id',idFormation);
+            params2.append('ville',document.querySelector("#ville").value);
+            params2.append('anneeObtention',document.querySelector("#annee").value);
+            params2.append('intitule',document.querySelector("#intitule").value);
+            params2.append('lieu',document.querySelector("#lieu").value);
             // Ajax
-            axios.post('delete/deleteFormation.php', params2)
+            axios.post('update/updateFormation.php', params2)
             .then((response) =>{    
               console.log('response',response);     
-              document.location.href="http://localhost/CV_back_end/essaie_delate.php"; 
+              document.location.href="http://localhost/CV_back_end/essaie_update.php"; 
               
             })
             .catch(function(error){

@@ -12,65 +12,33 @@
 <body>
   <form id="form">
     <div class="card-header">
-      <h6>Suppression une formation</h6>
+      <h6>Modifier une experience pro</h6>
     </div>
     <div class="card-body">
       <div class="input-group">
         <div class="input-group-prepend">
-          <span class="input-group-text">Ville</span>
+          <span class="input-group-text">Nom</span>
         </div>
         <input
                 type="text"
                 class="form-control"
                 maxlength="32"
-                id="ville"
-                placeholder="ville"
-                disabled
+                id="nom"
+                placeholder="nom"
               />
       </div>
     </div>
     <div class="card-body">
       <div class="input-group">
         <div class="input-group-prepend">
-          <span class="input-group-text">année</span>
+          <span class="input-group-text">Logo</span>
         </div>
         <input
                 type="text"
                 class="form-control"
                 maxlength="32"
-                id="annee"
-                placeholder="annee"
-                disabled
-              />
-      </div>
-    </div>
-    <div class="card-body">
-      <div class="input-group">
-        <div class="input-group-prepend">
-          <span class="input-group-text">intitulé</span>
-        </div>
-        <input
-                type="text"
-                class="form-control"
-                maxlength="32"
-                id="intitule"
-                placeholder="intitule"
-                disabled
-              />
-      </div>
-    </div>
-    <div class="card-body">
-      <div class="input-group">
-        <div class="input-group-prepend">
-          <span class="input-group-text">Lieu</span>
-        </div>
-        <input
-                type="text"
-                class="form-control"
-                maxlength="32"
-                id="lieu"
-                placeholder="lieu"
-                disabled
+                id="logo"
+                placeholder="logo"
               />
       </div>
     </div>
@@ -88,28 +56,26 @@
   </form>
   <script>
 
-    let formation = null;
+    let languageProgrammation = null;
     let parametres = window.location.toString();
     let form = document.querySelector('#form').outerHTML;
     
     console.log('parametres',parametres);
 
     let parametreID = parametres.split('?');
-    let idFormation = parametreID[1];
-    console.log('id',idFormation);
+    let idLanguageProgrammation = parametreID[1];
+    console.log('id',idLanguageProgrammation);
     const params = new FormData();
-    params.append('id',idFormation);
+    params.append('id',idLanguageProgrammation);
     
-    axios.post("get/getFormation.php", params)
+    axios.post("get/getLanguageProgrammation.php", params)
           .then((response) => {
             console.log('response',response);
-            formation = response.data;
-            let formFormation = form;
+            languageProgrammation = response.data;
+            let formLanguageProgrammation = form;
             // Alimentation du formulaire
-            document.querySelector("#ville").value = formation.ville;
-            document.querySelector("#annee").value = formation.anneeObtention;
-            document.querySelector("#intitule").value = formation.intitule;
-            document.querySelector("#lieu").value = formation.lieu;
+            document.querySelector("#nom").value = languageProgrammation.nom;
+            document.querySelector("#logo").value = languageProgrammation.logo;
             
     })
     .catch(function (error) {
@@ -122,12 +88,14 @@
             event.preventDefault(); 
             // parametres
             const params2 = new FormData();
-            params2.append('id',idFormation);
+            params2.append('id',idLanguageProgrammation);
+            params2.append('nom',document.querySelector("#nom").value);
+            params2.append('logo',document.querySelector("#logo").value);
             // Ajax
-            axios.post('delete/deleteFormation.php', params2)
+            axios.post('update/updateLanguageProgrammation.php', params2)
             .then((response) =>{    
               console.log('response',response);     
-              document.location.href="http://localhost/CV_back_end/essaie_delate.php"; 
+              document.location.href="http://localhost/CV_back_end/essaie_update.php"; 
               
             })
             .catch(function(error){

@@ -1,8 +1,8 @@
 <?php
 header("Access-Control-Allow-Origin: *");
 //Relier la classe formation
-require_once 'cnx.php';    
-require_once 'classes/class.Formation.php';
+require_once '../cnx.php';    
+require_once '../classes/class.Formation.php';
 
 if(isset($_POST['id']))
 {
@@ -40,6 +40,21 @@ if(isset($_POST['id']))
         $donnee['Intitule_formation'],
         $donnee['Lieu_formation'],
       );
+      //Création d'un objet Candidat
+      $candidat = new Candidat(
+        $donnee['ID_CANDIDAT'],
+        $donnee['Nom_candidat'],
+        $donnee['Prenom_candidat'],
+        $donnee['Adresse_candidat'],
+        $donnee['Mail_candidat'],
+        $donnee['Ville_candidat'],
+        $donnee['Date_naissance_candidat'],
+        $donnee['info_candidat'],
+        $donnee['Code_postal_candidat'],
+        $donnee['Num_tel_candidat']
+      );
+      //Injection des candidats dans la formation
+      $formation->setLesCandidats($candidat);
     }
     
   }

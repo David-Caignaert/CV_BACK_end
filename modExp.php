@@ -12,35 +12,33 @@
 <body>
   <form id="form">
     <div class="card-header">
-      <h6>Suppression une formation</h6>
+      <h6>Modifier une experience pro</h6>
     </div>
     <div class="card-body">
       <div class="input-group">
         <div class="input-group-prepend">
-          <span class="input-group-text">Ville</span>
+          <span class="input-group-text">date de début</span>
         </div>
         <input
                 type="text"
                 class="form-control"
                 maxlength="32"
-                id="ville"
-                placeholder="ville"
-                disabled
+                id="date_debut"
+                placeholder="date_debut"
               />
       </div>
     </div>
     <div class="card-body">
       <div class="input-group">
         <div class="input-group-prepend">
-          <span class="input-group-text">année</span>
+          <span class="input-group-text">date de fin</span>
         </div>
         <input
                 type="text"
                 class="form-control"
                 maxlength="32"
-                id="annee"
-                placeholder="annee"
-                disabled
+                id="date_fin"
+                placeholder="date_fin"
               />
       </div>
     </div>
@@ -55,7 +53,6 @@
                 maxlength="32"
                 id="intitule"
                 placeholder="intitule"
-                disabled
               />
       </div>
     </div>
@@ -70,14 +67,26 @@
                 maxlength="32"
                 id="lieu"
                 placeholder="lieu"
-                disabled
+              />
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text">Ville</span>
+        </div>
+        <input
+                type="text"
+                class="form-control"
+                maxlength="32"
+                id="ville"
+                placeholder="ville"
               />
       </div>
     </div>
     
-    
     <div class="alert alert-warning text-center">
-      Voulez-vous vraiment supprimer cette experience pro ?
+      Voulez-vous vraiment modifier cette experience pro ?
     </div>
     <div class="card-footer">
       <button type="button" class="btn btn-default float-left" id="cancel">
@@ -88,28 +97,29 @@
   </form>
   <script>
 
-    let formation = null;
+    let experiencePro = null;
     let parametres = window.location.toString();
     let form = document.querySelector('#form').outerHTML;
     
     console.log('parametres',parametres);
 
     let parametreID = parametres.split('?');
-    let idFormation = parametreID[1];
-    console.log('id',idFormation);
+    let idExperiencePro = parametreID[1];
+    console.log('id',idExperiencePro);
     const params = new FormData();
-    params.append('id',idFormation);
+    params.append('id',idExperiencePro);
     
-    axios.post("get/getFormation.php", params)
+    axios.post("get/getExperiencePro.php", params)
           .then((response) => {
             console.log('response',response);
-            formation = response.data;
-            let formFormation = form;
+            experiencePro = response.data;
+            let formExperiencePro = form;
             // Alimentation du formulaire
-            document.querySelector("#ville").value = formation.ville;
-            document.querySelector("#annee").value = formation.anneeObtention;
-            document.querySelector("#intitule").value = formation.intitule;
-            document.querySelector("#lieu").value = formation.lieu;
+            document.querySelector("#date_debut").value = experiencePro.dateDebut;
+            document.querySelector("#date_fin").value = experiencePro.dateFin;
+            document.querySelector("#intitule").value = experiencePro.intitule;
+            document.querySelector("#lieu").value = experiencePro.lieu;
+            document.querySelector("#ville").value = experiencePro.ville;
             
     })
     .catch(function (error) {
@@ -122,12 +132,17 @@
             event.preventDefault(); 
             // parametres
             const params2 = new FormData();
-            params2.append('id',idFormation);
-            // Ajax
-            axios.post('delete/deleteFormation.php', params2)
+            params2.append('id',idExperiencePro);
+            params2.append('dateDebut',document.querySelector('#date_debut').value);
+            params2.append('dateFin',document.querySelector('#date_fin').value);
+            params2.append('intitule',document.querySelector('#intitule').value);
+            params2.append('lieu',document.querySelector('#lieu').value);
+            params2.append('ville',document.querySelector('#ville').value);
+
+            axios.post('update/updateExperiencePro.php', params2)
             .then((response) =>{    
               console.log('response',response);     
-              document.location.href="http://localhost/CV_back_end/essaie_delate.php"; 
+              document.location.href="http://localhost/CV_back_end/essaie_update.php"; 
               
             })
             .catch(function(error){
