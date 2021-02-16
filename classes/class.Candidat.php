@@ -1,11 +1,14 @@
 <?php
+//Création de relation entre page
 require_once('class.Centre_interet.php');
 require_once('class.Experience_pro.php');
 require_once('class.Formation.php');
 require_once('class.Language_programmation.php');
 
+//Création de la classe Candidat
 class Candidat implements JsonSerializable
 {
+	//Déclaration des variables
 	private $id = 0;
   private $nom = '';
   private $prenom ='';
@@ -14,14 +17,18 @@ class Candidat implements JsonSerializable
   private $ville = '';
   private $dateNaissance = '';
   private $info = '';
+	private $codePostal = 0;
+	private $numTel = '';
 
+	//Déclaration des variables pour la relation entre les tables
   private $lesCentreInteret = array();
   private $lesExperiencesPro = array();
   private $lesFormations = array();
   private $lesLanguagesDeProgrammations = array();
-
+	
+	//Création du constructeur
   public function __construct($id=0,$nom='',$prenom='',$adresse='',
-  $mail='',$ville='',$dateNaissance='',$info='')
+  $mail='',$ville='',$dateNaissance='',$info='',$codePostal=0,$numTel='')
   {
     $this->id = $id;
     $this->nom = $nom;
@@ -31,6 +38,8 @@ class Candidat implements JsonSerializable
     $this->ville = $ville;
     $this->dateNaissance = $dateNaissance;
     $this->info = $info;
+		$this->codePostal = $codePostal;
+		$this->numTel = $numTel;
 	}
 	
 	//getter
@@ -46,6 +55,8 @@ class Candidat implements JsonSerializable
 	function getLesExperiencesPro() {return $this->lesExperiencesPro;} 
 	function getLesFormations() {return $this->lesFormations;} 
 	function getLesLanguagesDeProgrammations() {return $this->lesLanguagesDeProgrammations; } 
+	function getCodePostal() {return $this->codePostal;} 
+	function getNumTel() {return $this->numTel;} 
 	
 	//setter
 	function setId($id) {$this->id = $id;} 
@@ -60,16 +71,13 @@ class Candidat implements JsonSerializable
 	function setLesExperiencesPro($lesExperiencesPro) {$this->lesExperiencesPro = $lesExperiencesPro;} 
 	function setLesFormations($lesFormations) {$this->lesFormations = $lesFormations;} 
 	function setLesLanguagesDeProgrammations($lesLanguagesDeProgrammations) {$this->lesLanguagesDeProgrammations = $lesLanguagesDeProgrammations;} 
+	function setCodePostal($codePostal) {$this->codePostal = $codePostal;} 
+	function setNumTel($numTel) {$this->numTel = $numTel;} 
 	
+	//Sécifier les données en JSON
 	public function jsonSerialize(){
 		return get_object_vars($this);
 	
 }
 }
-
-
-
-
-
-
 ?>
