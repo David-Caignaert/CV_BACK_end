@@ -1,9 +1,9 @@
 <?php
 header("Access-Control-Allow-Origin: *");
-//Relier la classe Candicat
+//Création de la relation entre les pages
 require_once 'cnx.php';    
 require_once 'classes/class.Centre_interet.php';
-//ordre sql
+//requete sql pour la liste des centre d'interet
 $sql_centre_interet = "SELECT * FROM centre_interet";
 //préparation de la requete 
 $requete_centre_interet = $pdo->prepare($sql_centre_interet);
@@ -20,6 +20,7 @@ if($requete_centre_interet->execute())
       $donnee_centre_interet['ID_CENTRE_INTERET'],
       $donnee_centre_interet['Intitule_centre_interet'],
     );
+    //Injection des centre d'interet dans la liste des centre d'interet
     $liste_centre_interet[] =$centre_ineret;
   }
 }

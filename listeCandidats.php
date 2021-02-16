@@ -1,13 +1,14 @@
 <?php
 header("Access-Control-Allow-Origin: *");
-//Relier la classe Candicat
+//Création de la relation entre les pages
 require_once 'cnx.php';    
 require_once 'classes/class.Candidat.php';
 require_once 'classes/class.Centre_interet.php';
 require_once 'classes/class.Experience_pro.php';
 require_once 'classes/class.Formation.php';
 require_once 'classes/class.Language_programmation.php';
-// ordre SQL 
+
+//Requete sql pour la liste des candidats 
 $sql_candidat = " SELECT * FROM candidat";
 // préparation de la requete
 $requete_candidat = $pdo->prepare($sql_candidat);
@@ -28,9 +29,11 @@ if($requete_candidat->execute())
       $donnees_candidat['Mail_candidat'],
       $donnees_candidat['Ville_candidat'],
       $donnees_candidat['Date_naissance_candidat'],
-      $donnees_candidat['info_candidat']
+      $donnees_candidat['info_candidat'],
+      $donnees_candidat['Code_postal_candidat'],
+      $donnees_candidat['Num_tel_candidat']
     );
-    // recherche les centre d'interet
+    //Requete sql pour Recherche les centre d'interet du candidat
     $sql_candidat = "SELECT * FROM candidat,avoir,centre_interet 
                               WHERE candidat.ID_CANDIDAT = avoir.ID_CANDIDAT 
                               AND avoir.ID_CENTRE_INTERET = centre_interet.ID_CENTRE_INTERET";
@@ -51,12 +54,13 @@ if($requete_candidat->execute())
         $donnees_candidat2['ID_CENTRE_INTERET'],
         $donnees_candidat2['Intitule_centre_interet']
         );
+        //Relier les centre d'interet a la liste des centre d'interet
         $liste_centre_interet[] = $centre_interet_candidat;
       }
     }
-    // Associer les centre d'interet au candidat
+    // Associer la liste des centre d'interet au candidat
     $candidat->setLesCentreInteret($liste_centre_interet);
-    // recherche les experiences_pro
+    //Requete sql pour rechercher les experiences_pro du candidat
     $sql_candidat = "SELECT * FROM candidat,effectuer,experience_pro 
                               WHERE candidat.ID_CANDIDAT = effectuer.ID_CANDIDAT
                               AND effectuer.ID_EXPERIENCE_PRO = experience_pro.ID_EXPERIENCE_PRO";
@@ -81,10 +85,11 @@ if($requete_candidat->execute())
           $donnees_candidat3['Lieu_experience_pro'],
           $donnees_candidat3['Ville_experience_pro']      
         );
+        //relier les experience pro a la liste des experience pro
         $liste_experience_pro[] = $experience_pro_candidat;
       }
     }
-      // Associer les experiences_pro au candidat
+      // Associer la liste des experiences_pro au candidat
       $candidat->setLesExperiencesPro($liste_experience_pro);
     // recherche les formations
     $sql_candidat = "SELECT * FROM candidat,passer,formation 
@@ -110,15 +115,16 @@ if($requete_candidat->execute())
         $donnees_candidat4['Intitule_formation'],
         $donnees_candidat4['Lieu_formation'],
         );
+        //Relier les formation a la liste des formations
         $liste_formation[] = $formation_candidat;
       }
     }
-      // Associer les formations au candidat
+      // Associer la liste des formations au candidat
       $candidat->setLesFormations($liste_formation);
 
 
 
-    // recherche les Langagues de programmation
+    //Requete sql pour rechercher les Langagues de programmation du candidat
     $sql_candidat = "SELECT * FROM candidat,connaitre,language_programmation 
                               WHERE candidat.ID_CANDIDAT = connaitre.ID_CANDIDAT
                               AND connaitre.ID_LANGUAGE_PROGRAMMATION = 
@@ -141,12 +147,13 @@ if($requete_candidat->execute())
         $donnees_candidat5['Nom_language_programmation'],
         $donnees_candidat5['Logo_language_programmation'],
         );
+        //Relier les language de programmation a la liste de language de programmation
         $liste_langague_programmation[] = $langague_programmation_candidat;
       }
     }
-      //associer le language_programmation au candidat
+      //associer la liste de language_programmation au candidat
       $candidat->setLesLanguagesDeProgrammations($liste_langague_programmation);
-    // Ajouter à la liste
+    // Ajouter le candidat a la liste de candidat
     $liste_candidats[]=$candidat;
   }
 }
