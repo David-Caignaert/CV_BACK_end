@@ -21,7 +21,7 @@ if(isset($_POST['id']))
   $sql = "SELECT *  FROM candidat,passer,formation 
                     WHERE candidat.ID_CANDIDAT = passer.ID_CANDIDAT
                     AND passer.ID_FORMATION = formation.ID_FORMATION 
-                    AND ID_FORMATION = ?";
+                    AND formation.ID_FORMATION = ?";
   //Préparation de la requete
   $requete = $pdo->prepare($sql);
   //Parametre : id d'une formation
@@ -41,6 +41,7 @@ if(isset($_POST['id']))
         $donnee['Lieu_formation'],
       );
     }
+    
   }
   echo json_encode($formation);
 }

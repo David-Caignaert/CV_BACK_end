@@ -21,7 +21,7 @@ if(isset($_POST['id']))
   $sql = "SELECT *  FROM candidat,avoir,centre_interet 
                     WHERE  candidat.ID_CANDIDAT = avoir.ID_CANDIDAT
                     AND avoir.ID_CENTRE_INTERET = centre_interet.ID_CENTRE_INTERET
-                    AND ID_CENTRE_INTERET = ?";
+                    AND centre_interet.ID_CENTRE_INTERET = ?";
   //Préparation de la requete
   $requete = $pdo->prepare($sql);
   //Parametre : id du centre d'interet

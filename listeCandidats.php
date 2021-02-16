@@ -145,7 +145,7 @@ if($requete_candidat->execute())
       }
     }
       //associer le language_programmation au candidat
-      $candidat->setLesLanguagesDeProgrammations($langague_programmation_candidat);
+      $candidat->setLesLanguagesDeProgrammations($liste_langague_programmation);
     // Ajouter à la liste
     $liste_candidats[]=$candidat;
   }
